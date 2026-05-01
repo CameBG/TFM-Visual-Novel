@@ -27,7 +27,7 @@ Torrado: Tienen una mascota de un perro o algo así... # img Torrado: detective_
     -> Oficina_Tutorial
 + [Uff... voy a pasar de decirle nada, no quiero más trabajo]
     ~ amistad_torrado -= 1
-    Yo: I don't spik espanish.
+    Yo: I don spik espanish.
     Torrado: ¡Pero si te he escuchado mandar un audio hace unos minutos! # img Torrado: detective_sad_talk.png 80 100 30
     Torrado: Y tu inglés es aún peor que el mío. # img Torrado: detective_sad_talk2.png 80 100 30
     Yo: Perdón... Mira, ¿ves esa calle a la derecha? Si sigues recto llegarás.
@@ -63,7 +63,9 @@ Jefa: Necesito que refresques el acceso al servidor. ¿Recuerdas cómo entrar? #
     -> Tutorial_Server
 === Tutorial_Server ===
 Jefa: Bien. Echa un vistazo a la estructura. # img jefa: jefa_pointup_talk.png 10 100 30
-Jefa: Ahora la tabla <b>Viviendas</b> tiene cientos de filas. # img jefa: jefa_pointup_1.png 10 100 30
+Jefa: Te he dejado disponibles tres tablas, ya que el resto por lo que tengo entendido no te van a ser necesarias.
+Jefa: Si consideras que necesitas más información dímelo.
+Jefa: Ahora, la tabla <b>Viviendas</b> tiene cientos de filas. # img jefa: jefa_pointup_1.png 10 100 30
 Jefa: No olvides filtrar siempre por <b>Distrito</b> o nos volveremos locos. # img jefa: jefa_pointup_2.png 10 100 30
 Jefa: Bueno, yo me voy a marchar, que tengo a otros clientes esperando. 
 
@@ -103,7 +105,7 @@ Narrador: Reconoces la voz de inmediato. ¿Será aquel inspector de esta mañana
 === Encuentro_Proactivo ===
 Yo: Voy a acercarme a la sala de ordenadores a ver si es él...
 # img bg: facility-5.png
-Narrador: Allí está Torrado, mirando los ordenadores con sospecha.
+Narrador: Allí está Torrado, mirando los ordenadores como si de una escena de crimen se tratase.
 # img Torrado: detective_std.png 80 100 30
 -> Dialogo_Torrado
 === Llamada_Jefa ===
@@ -124,15 +126,15 @@ Narrador: Te encuentras con el inspector cerca de la entrada.
     Torrado: ¡Ahí estás! Mi guía de esta mañana. ¡Este sitio es un laberinto! 
 - else:
     # img Torrado: detective_sad_talk.png 80 100 30
-    Torrado: Vaya... pero si es el que "no hablaba español". Veo que para trabajar sí sabes. 
+    Torrado: Vaya... pero si es el que "no hablaba español". 
 }
 
 Torrado: No sabía que trabajabas aquí. Necesito tu ayuda. # img Torrado: detective_std_talk.png 80 100 30
-Torrado: El departamento no me deja tocar un PC ni para el buscaminas... # img Torrado: detective_std_2.png 80 100 30
-Torrado: Dicen que aquí puedo conseguir la información que me falta. # img Torrado: detective_std_3.png 80 100 30
+Torrado: El departamento no me deja tocar un ordenador ni para jugar al buscaminas... # img Torrado: detective_std_2.png 80 100 30
+Torrado: El caso es que me falta información. # img Torrado: detective_std_3.png 80 100 30
 Torrado: ¿Me puedes ayudar a continuar con este caso?
 
-Yo: Sígueme a mi puesto. Por favor, no toque ningún equipo...
+Yo: Claro que sí, sígueme a mi puesto, pero por favor no toque ningún equipo...
 # img Torrado: detective_sad.png 80 100 30
 -> Sala_Ordenadores
 === Sala_Ordenadores ===
@@ -140,8 +142,9 @@ Yo: Sígueme a mi puesto. Por favor, no toque ningún equipo...
 # img Torrado: detective_std_2.png 80 100 30
 Narrador: Torrado se sienta a tu lado, fascinado por los monitores.
 Yo: ¿Qué es lo que necesita, inspector?
-Torrado: Dicen que esto es una prueba para ver si somos útiles en casos confidenciales. # img Torrado: detective_std_3.png 80 100 30
-Torrado: Mi archivo no tiene datos suficientes. Veamos qué dice tu terminal. # img Torrado: detective_std_2.png 80 100 30
+Torrado: Pues mira, cómo te iba diciendo antes... El departamento no confía mucho en mí... 
+Torrado: Y nos han puesto en "prueba", a ti para ver si eres útil en casos más confidenciales, y a mí para saber si pueden confiar más. # img Torrado: detective_std_3.png 80 100 30
+Torrado: El archivo que me ha dado mi jefe no tiene los datos suficientes para resolver este caso, así que te voy a necesitar para conseguir lo que falta. # img Torrado: detective_std_2.png 80 100 30
 Yo: Entendido. 
 
 Torrado: Buscamos a alguien que dejó un paquete en la <b>Avenida Luna</b>. # img Torrado: detective_std.png 80 100 30
