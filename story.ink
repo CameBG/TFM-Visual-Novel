@@ -2,6 +2,7 @@ VAR amistad_jefa = 1
 VAR amistad_torrado = 1
 VAR nota = 0
  
+ 
 -> Morning
 
 === Morning ===
@@ -45,10 +46,10 @@ Narrador: Es temprano, pero tu jefa Caye ya está esperándote con los brazos cr
 Jefa: ¡Ah, ya estás aquí! Escucha, hoy es un día movido. # img jefa: jefa_molesta.png 10 100 30
 Jefa: El Departamento de Policía ha solicitado acceso al Censo. # img jefa: jefa_molesta2.png 10 100 30
 Jefa: Van a enviar a un inspector para una investigación oficial. # img jefa: jefa_pointup_1.png 10 100 30
-Jefa: Necesito que refresques el acceso al servidor. ¿Recuerdas cómo entrar? # img jefa: jefa_pointup_talk.png 10 100 30
+Jefa: Necesito que abras el <b>Oracle SQL Developer</b> y conectes al servidor. ¿Recuerdas cómo? # img jefa: jefa_pointup_talk.png 10 100 30
 + [Claro que me acuerdo...]
     ~ amistad_jefa += 1
-    Yo: Es con el comando `sqlcmd -S .\SQLEXPRESS -E`, ¿verdad?
+    Yo: Uso el botón verde de "Nueva Conexión" y entro en el esquema.
     Jefa: Exacto. Me gusta que estés atento a los protocolos. # img jefa: jefa_pointup.png 10 100 30
     Jefa: No podemos permitirnos fallos delante de la policía. # img jefa: jefa_pointup_2.png 10 100 30
     Jefa: Es una oportunidad perfecta para nosotros. 
@@ -57,13 +58,15 @@ Jefa: Necesito que refresques el acceso al servidor. ¿Recuerdas cómo entrar? #
     ~ amistad_jefa -= 1
     Yo: La verdad es que no me acuerdo... ¿Me lo puedes recordar, Caye?
     Jefa: (Suspira profundamente) Increíble. # img jefa: jefa_molesta_habla.png 10 100 30
-    Jefa: Espero que el café te haga efecto pronto. Es `sqlcmd -S .\SQLEXPRESS -E`. # img jefa: jefa_molesta.png 10 100 30
+    Jefa: Espero que el café te haga efecto pronto. Dale al botón de <b>Nueva Conexión</b> y abre una Hoja de Trabajo. # img jefa: jefa_molesta.png 10 100 30
     Jefa: Memorízalo de una vez, es la base de nuestro trabajo.
     Yo: Gracias, jefa. No volverá a pasar. 
     -> Tutorial_Server
 === Tutorial_Server ===
 Jefa: Bien. Echa un vistazo a la estructura. # img jefa: jefa_pointup_talk.png 10 100 30
 Jefa: Te he dejado disponibles tres tablas, ya que el resto por lo que tengo entendido no te van a ser necesarias.
+Jefa: Además solo tenemos la información de 4 distritos ahora mismo, espero que seamos capaces de ayudar a la policía con estos datos.
+Jefa: Si todo va bien, podremos conseguir más información y más datos.
 Jefa: Si consideras que necesitas más información dímelo.
 Jefa: Ahora, la tabla <b>Viviendas</b> tiene cientos de filas. # img jefa: jefa_pointup_1.png 10 100 30
 Jefa: No olvides filtrar siempre por <b>Distrito</b> o nos volveremos locos. # img jefa: jefa_pointup_2.png 10 100 30
@@ -78,10 +81,10 @@ Yo: <i>Entendido. Antes de que llegue el inspector, verificaré las tablas...</i
 - (loop_tablas)
 + [SHOW TABLES;]
     ~ fallos = 1
-    Yo: (No... eso es de MySQL. Aquí usamos <b>SQL Server Express</b>).
+    Yo: (No... eso es de MySQL. En este sistema de Oracle se usa otra consulta).
     -> loop_tablas
 
-+ [SELECT name FROM sys.tables;]
++ [SELECT table_name FROM user_tables;]
     { 
     - fallos == 0: 
         ~ nota += 5
@@ -206,14 +209,14 @@ Yo: Vale, inspector. Vamos a ver en qué distrito cae la Avenida Luna para empez
 === Resultado_Distrito ===
 Narrador: La pantalla muestra un único resultado: <b>Distrito 9</b>.
 # img Torrado: detective_happy.png 80 100 30
-Torrado: ¡El Distrito 9! Una zona industrial perfecta para dejar paquetes sin ser visto.
+Torrado: ¡El Distrito 4! Una zona industrial perfecta para dejar paquetes sin ser visto.
 Torrado: ¿Puedes mostrarme qué portales hay exactamente en esa calle? # img Torrado: detective_std_talk.png 80 100 30
 
 Yo: Claro, vamos a listar las viviendas de la Avenida Luna en ese distrito.
 
 ~ temp fallos_viviendas = 0
 - (Query_Viviendas_Calle)
-+ [SELECT id_vivienda, numero FROM Viviendas WHERE calle = 'Avenida Luna' AND distrito = 'Distrito 9';]
++ [SELECT id_vivienda, numero FROM Viviendas WHERE calle = 'Avenida Luna' AND distrito = 'Distrito 4';]
     { 
     - fallos_viviendas == 0: 
         ~ nota += 5
@@ -224,23 +227,23 @@ Yo: Claro, vamos a listar las viviendas de la Avenida Luna en ese distrito.
     }
     -> Resultado_Viviendas_Calle
 
-* [SELECT id_vivienda, numero FROM Viviendas WHERE calle = 'Avenida Luna' OR distrito = 'Distrito 9';]
+* [SELECT id_vivienda, numero FROM Viviendas WHERE calle = 'Avenida Luna' OR distrito = 'Distrito 4';]
     # img Torrado: detective_sad_talk2.png 80 100 30
     ~ fallos_viviendas++
     Torrado: ¡Cáspita! Salen muchísimas viviendas. No puede ser, esa avenida no era tan larga.
     Yo: (El operador 'OR' me está sumando todo el distrito. Debo usar 'AND').
     -> Query_Viviendas_Calle
 === Resultado_Viviendas_Calle ===
-Narrador: Resultados: ID 18 (Nº 15), ID 19 (Nº 17), ID 20 (Nº 19).
+Narrador: Resultados: ID 98 (Nº 15), ID 99 (Nº 17), ID 100 (Nº 19).
 # img Torrado: detective_happier.png 80 100 30
 Torrado: ¡Espera un segundo! (Rebusca entre sus notas)... ¡Aquí está! "Entregar en el <b>número 19</b>".
-Torrado: ¡Ese es el sitio! El portal 19 es el <b>ID_Vivienda 20</b>. ¡Sácame a los habitantes! # img Torrado: detective_std.png 80 100 30
+Torrado: ¡Ese es el sitio! El portal 19 es el <b>ID_Vivienda 100</b>. ¡Sácame a los habitantes! # img Torrado: detective_std.png 80 100 30
 
-Yo: (A ver... portal 19 es ID_Vivienda 20. Usaré ese ID para buscar a las personas).
+Yo: (A ver... portal 19 es ID_Vivienda 100... Creo que me será útil).
 
 - (Reto_Final_Habitantes)
-+ [SELECT nombre FROM Habitantes WHERE id_vivienda = 20]
-    Yo: Consultando nombres para la vivienda con ID 20...
++ [SELECT nombre FROM Habitantes WHERE id_vivienda = 100]
+    Yo: Consultando nombres para la vivienda con ID 100...
     -> Lista_Sospechosos
 + [SELECT nombre FROM Habitantes WHERE numero = 19]
     # img Torrado: detective_std_think.png 80 100 30
@@ -248,7 +251,7 @@ Yo: (A ver... portal 19 es ID_Vivienda 20. Usaré ese ID para buscar a las perso
     -> Reto_Final_Habitantes
 + [SELECT * FROM Habitantes WHERE id_vivienda = 19]
     # img Torrado: detective_std_think.png 80 100 30
-    Yo: (Cuidado... el ID del portal 19 es el **20**. No debo confundir el número de calle con el ID de la tabla). 
+    Yo: (Cuidado... el ID del portal 19 no era ese... No debo confundir el número de calle con el ID de la tabla). 
     -> Reto_Final_Habitantes
 === Lista_Sospechosos ===
 # img bg: final-evidence.png
@@ -263,7 +266,7 @@ Yo: Tranquilo. Vamos a ver cuántos registros de actividad tiene este portal par
     ~ fallos_count++
     Yo: (No, MAX se usa para buscar el valor más alto en una columna, no para contar filas). 
     -> Reto_Contar_Avisos
-+ [SELECT COUNT(*) FROM Registros_Actividad WHERE id_vivienda = 20;]
++ [SELECT COUNT(*) FROM Registros_Actividad WHERE id_vivienda = 100;]
     { 
     - fallos_count == 0: 
         ~ nota += 5 
@@ -273,7 +276,7 @@ Yo: Tranquilo. Vamos a ver cuántos registros de actividad tiene este portal par
         Yo: (Conseguido, ahí está el total).
     }
     -> Resultado_Conteo
-* [SELECT * FROM Registros_Actividad WHERE id_vivienda = 20;]
+* [SELECT * FROM Registros_Actividad WHERE id_vivienda = 100;]
     # img Torrado: detective_std_think2.png 80 100 30
     ~ fallos_count++
     Yo: (Eso me daría la lista completa, pero yo solo quiero saber el número total ahora mismo). 
@@ -289,12 +292,12 @@ Torrado: ¡Siguen siendo demasiados! ¿Podemos ver el <b>último</b> aviso? El I
     ~ fallos_max++
     Yo: (No... El 19 es el número de calle, pero el ID que sacamos antes es el 20). 
     -> Reto_Maximo_Filtro
-* [SELECT MAX(id_vivienda) FROM Registros_Actividad WHERE id_registro = 20;]
+* [SELECT MAX(id_vivienda) FROM Registros_Actividad WHERE id_registro = 100;]
     # img Torrado: detective_std_think2.png 80 100 30
     ~ fallos_max++
     Yo: (Está casi... ¡pero algo falló! Voy a leer bien lo que he hecho).
     -> Reto_Maximo_Filtro
-+ [SELECT MAX(id_registro) FROM Registros_Actividad WHERE id_vivienda = 20;]
++ [SELECT MAX(id_registro) FROM Registros_Actividad WHERE id_vivienda = 100;]
     { 
     - fallos_max == 0: 
         ~ nota += 5
@@ -305,25 +308,61 @@ Torrado: ¡Siguen siendo demasiados! ¿Podemos ver el <b>último</b> aviso? El I
     }
     -> Resultado_Final_Exito
 === Resultado_Final_Exito ===
-# img bg: monitor-final.png
-Narrador: Registro 45: "Aviso: Vehículo de reparto obstaculizando salida de garaje". # img Torrado: detective_std.png 80 100 30
-Yo: El ID_Persona 45 es... <b>Marcos Peña</b>. # img Torrado: detective_happier.png 80 100 30
+Narrador: El sistema encuentra el último suceso en el edificio (Registro 45).
+Yo: Aquí está el detalle: "Vehículo mal estacionado. Sujeto identificado: **ID_Persona 45**".
 
-Torrado: ¡LO TENEMOS! Marcos Peña estaba con el vehículo en la puerta. ¡Eres un genio! 
-Torrado: No sabes el peso que me quitas de encima, muchacho. # img Torrado: detective_happier.png 80 100 30
+# img Torrado: detective_std_think.png 80 100 30
+Torrado: ¡Ya tenemos el número del sospechoso! Es el **45**.
+Torrado: Tengo aquí la lista de los sospechosos que estaban en el Distrito 4 a esa hora:
 
-Torrado: Voy a hablar con mi jefe ahora mismo para pasarle toda la información del caso. # img Torrado: detective_std_talk.png 80 100 30
-Torrado: ¡Seguro que se queda de piedra con nuestra eficiencia! 
+Torrado: Javier Rodríguez, Marcos Peña, Lucía Sánchez, y por último Elena Pérez
+
+Torrado: No podemos arrestar a nadie por error. ¡Usa la tabla **HABITANTES** para ver quién de ellos tiene el ID 45 y dímelo! # img Torrado: detective_std_talk.png 80 100 30
+~ temp fallo_marcos = 0
+- (Seleccion_Final)
++ [Señalar a Javier Rodríguez]
+    ~ fallo_marcos = 1
+    Torrado: ¿Seguro? Mira bien tu pantalla de SQL. Ese ID no me suena que sea el 45.
+    -> Seleccion_Final
+
++ [Señalar a Marcos Peña]
+    { 
+        - fallo_marcos == 0: 
+            ~ nota += 5 
+        - else: 
+            ~ nota += 2 
+    }
+    Yo: ¡Es Marcos Peña, inspector! He consultado el censo y su ID coincide con el del responsable del camión.
+    -> Revelacion_Final
+
++ [Señalar a Lucía Sánchez]
+    ~ fallo_marcos = 1
+    Torrado: Hum... me da que no. El sistema dice que Lucía tiene otro número de identificación.
+    -> Seleccion_Final
+
++ [Señalar a Elena Pérez]
+    ~ fallo_marcos = 1
+    Torrado: No, ella no es. Comprueba la consulta una vez más.
+    -> Seleccion_Final
+
+=== Revelacion_Final ===
+# img Torrado: detective_happier.png 80 100 30
+Torrado: ¡MARCOS PEÑA! ¡Exacto! ¡Ese es nuestro hombre!
+Torrado: Resulta que vive en el edificio y trabaja para la empresa de repartos. ¡Por eso conocía las horas muertas del garaje!
+Torrado: ¡Increíble trabajo, chaval! Ahora puedo ir al departamento de policía.
+-> Conclusion_Torrado
+
+=== Conclusion_Torrado ===
+Torrado: Voy a hablar con mi jefe ahora mismo. ¡Se va a quedar de piedra! 
 Torrado: Espero que nos veamos pronto, ¡ha sido un placer trabajar contigo! # img Torrado: detective_happy.png 80 100 30
-
-Narrador: Torrado guarda su libreta y archivos y te dedica un último saludo antes de salir.
+Narrador: Torrado guarda su libreta y sale disparado de la oficina con una sonrisa de oreja a oreja.
 # img Torrado: detective_happy.png 80 100 0
-
 -> Evening
+
 
 === Evening ===
 # img bg: street-3.png
-~ temp nota_final = (nota * 10) / 30
+~ temp nota_final = (nota * 10) / 35
 
 Narrador: El sol se pone. Torrado se prepara para marchar.
 
